@@ -6,11 +6,14 @@ ENV AIRFLOW_HOME=/opt/airflow
 
 USER root
 RUN apt-get update -qq && apt-get install vim -qqq
+# download extra modules for linux
+RUN apt-get install -y csvkit
 # git gcc g++ -qqq
 ENV PATH="/root/.local/bin/:$PATH"
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Ref: https://airflow.apache.org/docs/docker-stack/recipes.html
 
@@ -37,6 +40,7 @@ RUN DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/goo
 WORKDIR $AIRFLOW_HOME
 
 COPY scripts scripts
-RUN chmod +x scripts
-
+# RUN chmod +x scripts
+RUN chmod -R 777 /opt/airflow/*
+RUN mkdir -p data/{raw,processed}
 USER $AIRFLOW_UID
