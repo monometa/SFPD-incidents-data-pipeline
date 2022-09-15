@@ -67,6 +67,8 @@ x-airflow-common:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
+    # TO-DO: make temp_data folder for download data and transformation
+    - ./data:/opt/airflow/data
     - ~/.google/credentials/google_credentials.json:/.google/credentials/google_credentials.json
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
