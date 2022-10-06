@@ -1,0 +1,241 @@
+version: 2
+
+sources:
+    - name: police_staging 
+      database: gold-totem-359211
+      schema: police_staging 
+      tables:
+        - name: sfpd_data_2018-to-present_external_table  
+        - name: sfpd_data_2003-to-2017_external_table 
+
+
+models:
+  - name: stg_historical_dset
+    columns:
+      - name: ID
+        tests:
+          - not_null
+          - unique
+      - name: Incident_Category
+        tests:
+          - not_null
+
+  - name: int_historical_dset
+    columns:
+      - name: ID
+        tests:
+          - not_null
+          - unique
+      - name: Incident_Category
+        tests:
+          - accepted_values:
+              values:
+                - 'Larceny Theft'
+                - 'Burglary'
+                - 'Assault'
+                - 'Robbery'
+                - 'Motor Vehicle Theft'
+                - 'Drug Offense'
+
+  - name: stg_modern_dset
+    columns:
+      - name: ID
+        tests:
+          - not_null
+          - unique
+      - name: Incident_Category
+        tests:
+          - not_null
+# models:
+#     - name: sfpd_police_data_external_table
+
+#       columns:
+#         - name: "Incident_Datetime"
+#           description: >
+#             The date and time when the incident occurred
+#           tests:
+
+#         - name: "Incident_Date"
+#           description: >
+#             The date the incident occurred
+#           tests:
+
+#         - name: "Incident_Time"
+#           description: >
+#             The time the incident occurred
+#           tests:
+
+#         - name: "Incident_Year"
+#           description: >
+#             The year the incident occurred, provided as a  convenience for filtering
+#           tests:
+
+#         - name: "Incident_Day_of_Week"
+#           description: >
+#             The day of week the incident occurred
+#           tests:
+
+#         - name: "Report_Datetime"
+#           description: >
+#             Distinct from Incident Datetime, Report Datetime is  when the report was filed.
+#           tests:
+
+#         - name: "Row_ID"
+#           description: >
+#             A unique identifier for each row of data in the dataset
+#           tests:
+#             - unique:
+#                 severity: warn
+#             - not_null:
+#                 severity: warn
+#         - name: "Incident_ID"
+#           description: >
+#             This is the system generated identifier for incident  reports.
+#             Incident IDs and Incident Numbers both uniquely identify reports, 
+#             but Incident Numbers  are used when referencing cases and report documents.
+#           tests:
+
+#         - name: "Incident_Number"
+#           description: >
+#             The number issued on the report, sometimes  interchangeably referred to as the Case Number. 
+#             This number is used to reference cases and  report documents.
+#           tests:
+
+#         - name: "CAD_Number"
+#           description: >
+#             The Computer Aided Dispatch (CAD) is the system used  by the Department of Emergency Management (DEM) to dispatch officers and other public safety  personnel. 
+#             CAD Numbers are assigned by the DEM system and linked to relevant incident reports  (Incident Number). Not all Incidents will have a CAD Number. 
+#             Those filed online via Coplogic  (refer to Filed Online field) and others not filed through the DEM system will not have CAD  Numbers.
+#           tests:
+
+#         - name: "Report_Type_Code"
+#           description: >
+#             A system code for report types, these have  corresponding descriptions within the dataset.
+#           tests:
+
+#         - name: "Report_Type_Description"
+#           description: >
+#             The   description of the report type, can be one of 
+#             Initial; 
+#             Initial Supplement; 
+#             Vehicle Initial; 
+#             Vehicle Supplement; 
+#             Coplogic Initial; 
+#             Coplogic Supplement
+#           tests:
+
+#         - name: "Filed_Online"
+#           description: >
+#             Non- emergency police reports can be filed online by members of the public using SFPDs self-service reporting system
+#             called Coplogic Values in this field will be TRUE if Coplogic was used to file the report. 
+#             Please reference the link below for additional info (http://sanfranciscopolice.org/reports).
+#           tests:
+
+#         - name: "Incident_Code"
+#           description: >
+#             Incident Codes are the system codes to describe a  type of incident. 
+#             A single incident report can have one or more incident types associated. 
+#             In  those cases you will see multiple rows representing a unique combination of the Incident ID and  Incident Code.
+#           tests:
+
+#         - name: "Incident_Category"
+#           description: >
+#             A category mapped on to the Incident Code used in  statistics and reporting. 
+#             Mappings provided by the Crime Analysis Unit of the Police  Department.
+#           tests:
+
+#         - name: "Incident_Subcategory"
+#           description: >
+#             A subcategory mapped to the Incident Code that is  used for statistics and reporting. 
+#             Mappings are provided by the Crime Analysis Unit of the  Police Department.
+#           tests:
+
+#         - name: "Incident_Description"
+#           description: >
+#             The   description of the incident that corresponds  with the Incident Code. These are generally self-explanatory.
+#           tests:
+
+#         - name: "Resolution"
+#           description: >
+#             The resolution of the incident at the time of the report.
+#           tests:
+
+#         - name: "Intersection"
+#           description: >
+#             The 2 or more street names that intersect closest to  the original incident separated by a backward slash (\). 
+#             Note, the possible intersections will  only include those that satisfy the privacy controls.
+#           tests:
+
+#         - name: "CNN"
+#           description: >
+#             The  unique identifier of the intersection for reference back to other related basemap datasets. 
+#             For  more on the Centerline Node Network see https://datasf.gitbook.io/draft-publishing-standards/standard-reference-data/basemap/street-centerlines-nodes
+#           tests:
+
+#         - name: "Police_District"
+#           description: The Police District where the incident occurred.  
+#             District boundaries can be reviewed in the link below. 
+#             Please note this field is entered by  officers and not based on the point. 
+#             Reference here https://data.sfgov.org/d/wkhw-cjsf
+#           tests:
+
+#         - name: "Analysis_Neighborhood"
+#           description: This field is used to identify the neighborhood  where each incident occurs. 
+#             Neighborhoods and boundaries are defined by the Department of Public  Health and the Mayor's Office of Housing and Community Development. 
+#             Please reference the link  below for additional info https://data.sfgov.org/d/p5b7-5n3h 
+#           tests:
+
+#         - name: "Supervisor_District"
+#           description: >
+#             There are 11 members elected to the Board of  Supervisors in San Francisco, each representing a geographic district. 
+#             The Board of Supervisors  is the legislative body for San Francisco. 
+#             The districts are numbered 1 through 11. Please  reference the link below for additional info https://data.sfgov.org/d/8nkz-x4ny 
+#             Please note this  boundary is assigned based on the intersection, it may differ from the boundary the incident  actually occurred within.
+#           tests:
+
+#         - name: "Latitude"
+#           description: >
+#             The latitude coordinate in WGS84, spatial reference  is EPSG:4326
+#           tests:
+
+#         - name: "Longitude"
+#           description: >
+#             The longitude coordinate in WGS84, spatial reference  is EPSG:4326
+#           tests:
+
+#         - name: "Point"
+#           description: >
+#             Geolocation in OGC WKT format (e.g, POINT(37.4,-122.3)
+#           tests:
+
+#         - name: "Neighborhoods"
+#           description: neighborhoods)
+#           tests:
+
+#         - name: "ESNCAG___Boundary_File"
+#           description: esncag___boundary_file)
+#           tests:
+
+#         - name: "Central_Market_Tenderloin_Boundary_Polygon___Updated"
+#           description: central_market_tenderloin_boundary_polygon___updated)
+#           tests:
+
+#         - name: "Civic_Center_Harm_Reduction_Project_Boundary"
+#           description: civic_center_harm_reduction_project_boundary)
+#           tests:
+
+#         - name: "HSOC_Zones_as_of_2018_06_05"
+#           description: hsoc_zones_as_of_2018_06_05)
+#           tests:
+
+#         - name: "Invest_In_Neighborhoods__IIN__Areas"
+#           description: invest_in_neighborhoods__iin__areas)
+#           tests:
+
+#         - name: "Current_Supervisor_Districts"
+#           description: current_supervisor_districts)
+#           tests:
+
+#         - name: "Current_Police_Districts"
+#           description: current_police_districts)
+#           tests:
