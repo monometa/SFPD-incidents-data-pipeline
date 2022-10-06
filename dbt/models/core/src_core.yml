@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: dim_total_reports
+    columns:
+      - name: ID
+        tests:
+          - not_null
+          - unique
+      - name: Incident_Category
+        tests:
+          - not_null
