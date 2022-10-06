@@ -54,7 +54,7 @@ def transform_to_parquet(src_file):
     
     table = csv.read_csv(src_file)
     table = cast_datetime_to_timestamp(table,"Incident Datetime", 0)
-    table = cast_datetime_to_timestamp(table,"Report Datetime", 6)
+    table = cast_datetime_to_timestamp(table,"Report Datetime", 5)
     
     pq.write_table(table, 'police_data__2018-2022.parquet')
 
