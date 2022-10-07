@@ -1,8 +1,7 @@
 
 select 
     PdId as ID,
-    FORMAT_DATE('%F', PARSE_DATE('%m/%d/%Y', Date)) AS Date,
-    Time,
+    DATETIME(PARSE_DATE('%m/%d/%Y', Date), PARSE_TIME('%H:%M', Time)) as Incident_Datetime,
     IncidntNum as Incident_Number,
     INITCAP(Category) as Incident_Category,
     Descript as Incident_Description,

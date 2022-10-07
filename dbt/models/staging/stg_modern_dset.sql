@@ -1,7 +1,7 @@
+
 select 
     Row_ID as ID,
-    FORMAT_DATE('%F', PARSE_DATE('%Y/%m/%d', Incident_Date)) AS Date,
-    Incident_Time AS Time,
+    DATETIME(Incident_Datetime) as Incident_Datetime,
     Incident_Number,
     Incident_Category,
     Incident_Description,

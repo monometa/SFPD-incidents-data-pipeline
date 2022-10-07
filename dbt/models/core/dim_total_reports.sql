@@ -6,17 +6,16 @@ with
     modern as (select * from {{ ref('stg_modern_dset') }}),
 
     overall as (
-        select ROW_NUMBER() OVER(ORDER BY Date) ID, *                
+        select ROW_NUMBER() OVER(ORDER BY Incident_Datetime) ID, *                
             FROM(
                 select 
-                    Date,			
-                    Time,		
+                    Incident_Datetime,
                     Incident_Number,				
                     Incident_Category,			
                     Incident_Description,			
                     Police_District,			
                     Resolution,			
-                    Latitude    ,			
+                    Latitude,			
                     Longitude,
                 from
                     historical
@@ -24,8 +23,7 @@ with
                 UNION ALL 
                 
                 select 
-                    Date,			
-                    Time,		
+                    Incident_Datetime,
                     Incident_Number,				
                     Incident_Category,			
                     Incident_Description,			
