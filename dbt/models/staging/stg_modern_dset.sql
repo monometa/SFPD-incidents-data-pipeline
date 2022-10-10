@@ -1,21 +1,20 @@
+select
+    ROW_ID as ID,
+    INCIDENT_NUMBER,
+    INCIDENT_CATEGORY,
+    INCIDENT_DESCRIPTION,
+    POLICE_DISTRICT,
+    RESOLUTION,
+    LATITUDE,
+    LONGITUDE,
+    DATETIME(INCIDENT_DATETIME) as INCIDENT_DATETIME
 
-select 
-    Row_ID as ID,
-    DATETIME(Incident_Datetime) as Incident_Datetime,
-    Incident_Number,
-    Incident_Category,
-    Incident_Description,
-    Police_District,
-    Resolution,
-    Latitude,
-    Longitude
+from {{ source('police_staging', 'sfpd_data_2018_to_present_external_table') }}
 
-from {{ source('police_staging', 'sfpd_data_2018-to-present_external_table') }}
-
-where Police_District <> 'Out of SF' AND
-    Incident_Category = 'Larceny Theft' OR
-    Incident_Category = 'Assault' OR
-    Incident_Category = 'Motor Vehicle Theft' OR
-    Incident_Category = 'Drug Offense' OR
-    Incident_Category = 'Burglary' OR
-    Incident_Category = 'Robbery'
+where POLICE_DISTRICT != 'Out of SF'
+    and INCIDENT_CATEGORY = 'Larceny Theft' or
+    INCIDENT_CATEGORY = 'Assault' or
+    INCIDENT_CATEGORY = 'Motor Vehicle Theft' or
+    INCIDENT_CATEGORY = 'Drug Offense' or
+    INCIDENT_CATEGORY = 'Burglary' or
+    INCIDENT_CATEGORY = 'Robbery'
