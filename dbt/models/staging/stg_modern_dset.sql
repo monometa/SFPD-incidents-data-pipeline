@@ -8,7 +8,7 @@ select
     LATITUDE,
     LONGITUDE,
     DATETIME(INCIDENT_DATETIME) as INCIDENT_DATETIME
-
+    
 from {{ source('police_staging', 'sfpd_data_2018_to_present_external_table') }}
 
 where POLICE_DISTRICT != 'Out of SF'

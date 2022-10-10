@@ -1,4 +1,3 @@
-
 select 
     ID,
     Incident_Datetime,
