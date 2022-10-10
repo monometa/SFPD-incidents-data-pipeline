@@ -1,5 +1,10 @@
 import os
-import logging
+from datetime import datetime
+
+import pyarrow as pa
+import pyarrow.csv as csv
+import pyarrow.parquet as pq
+import pyarrow.compute as pc
 
 from airflow import DAG
 from airflow.utils.dates import days_ago
@@ -14,14 +19,9 @@ from airflow.providers.google.cloud.operators.bigquery import (
     BigQueryCreateExternalTableOperator,
     BigQueryInsertJobOperator,
 )
+from scripts import cast_column_datetime_2_timestamp
 
-from datetime import datetime
 from google.cloud import storage
-
-import pyarrow as pa
-import pyarrow.csv as csv
-import pyarrow.parquet as pq
-import pyarrow.compute as pc
 
 # import pandas as pd
 
@@ -39,14 +39,7 @@ default_args = {
     "retries": 1,
 }
 
-
-def cast_column_datetime_2_timestamp(table, column_name, column_pos):
-    new_datetime = pc.strptime(
-        table.column(column_name), format="%Y/%m/%d %H:%M:%S %p", unit="s"
-    )
-    table = table.set_column(column_pos, column_name, new_datetime)
-    return table
-
+# TO-DO: split transform_to_parquet func and put in a ./scripts
 
 def transform_to_parquet(src_file):
 

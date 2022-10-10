@@ -38,14 +38,7 @@ default_args = {
     "retries": 1,
 }
 
-
-def cast_datetime_to_timestamp(table, column_name, column_pos):
-    new_datetime = pc.strptime(
-        table.column(column_name), format="%Y/%m/%d %H:%M:%S %p", unit="s"
-    )
-    table = table.set_column(column_pos, column_name, new_datetime)
-    return table
-
+# TO-DO: put in ./scripts and do the same in modern-data-ing.py
 
 def transform_to_parquet(src_file):
 
