@@ -46,8 +46,8 @@ First clone the repository into your home directory and follow the steps.
   cd SFPD-de-capstone-project
   ```
   
-1. [Prerequisites](instructions/reddit.md)
-1. [Infrastructure with Terraform](instructions/setup_infrastructure.md)
+1. [Prerequisites](instructions/prerequisites.md)
+1. [Infrastructure with Terraform](instructions/infrastructure.md)
 1. [Docker & Airflow](instructions/docker_airflow.md) 
 1. [dbt](instructions/dbt.md)
 1. [Dashboard](instructions/visualisation.md)
