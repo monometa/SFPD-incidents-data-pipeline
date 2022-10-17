@@ -28,8 +28,11 @@ BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", "police_staging")
 
-DATASET = "historical_data"
+DATASET = "historical_police_reports"
 OUTPUT_PATH = "raw/"
+
+HISTORICAL_FILENAME_CSV = "2003_2017_police_reports.csv"
+HISTORICAL_FILENAME_PARQUET = "2003_2017_police_reports.parquet"
 
 default_args = {
     "owner": "airflow",
@@ -40,11 +43,12 @@ default_args = {
 
 # TO-DO: put in ./scripts and do the same in modern-data-ing.py
 
-def transform_to_parquet(src_file):
+
+def transform_to_parquet(src_file, output_file):
 
     table = csv.read_csv(src_file)
 
-    pq.write_table(table, "police_data__2003-2017.parquet")
+    pq.write_table(table, output_file)
 
 
 with DAG(
@@ -53,51 +57,57 @@ with DAG(
     default_args=default_args,
     catchup=False,
     max_active_runs=1,
-    tags=["de_police"],
+    tags=["police_reports"],
 ) as dag:
 
     download_dataset = BashOperator(
         task_id="download_dataset_task",
-        bash_command="curl -sSL 192.168.208.1:8000/police_data__2003-2017.csv > \
-            $AIRFLOW_HOME/police_data__2003-2017.csv",
+
+        # TO-DO: for curl set absolute path to https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-Historical-2003/tmnf-yvry
+
+        bash_command=f"curl -sSL 172.17.0.1:8000/police_data__2003-2017.csv > $AIRFLOW_HOME/{HISTORICAL_FILENAME_CSV}",
     )
 
-    transform_to_parquet = PythonOperator(
-        task_id="format_datetime_pyarrow_task",
+    transform_2_parquet = PythonOperator(
+        task_id="transform_to_partquet_task",
         python_callable=transform_to_parquet,
         op_kwargs={
-            "src_file": f"{AIRFLOW_HOME}/police_data__2003-2017.csv",
+            "src_file": f"{AIRFLOW_HOME}/{HISTORICAL_FILENAME_CSV}",
+            "output_file": f"{AIRFLOW_HOME}/{HISTORICAL_FILENAME_PARQUET}",
         },
     )
 
     local_to_gcs = LocalFilesystemToGCSOperator(
         task_id="local_to_gcs_task",
-        src="./police_data__2003-2017.parquet",
+        src=f"./{HISTORICAL_FILENAME_PARQUET}",
         dst=OUTPUT_PATH,
         bucket=BUCKET,
     )
 
-    bigquery_external_table_task = BigQueryCreateExternalTableOperator(
+    bigquery_external_table = BigQueryCreateExternalTableOperator(
         task_id=f"bq_{DATASET}_external_table_task",
         table_resource={
             "tableReference": {
                 "projectId": PROJECT_ID,
                 "datasetId": BIGQUERY_DATASET,
-                "tableId": f"{DATASET}_raw_dataset",
+                "tableId": f"raw_{DATASET}",
             },
             "externalDataConfiguration": {
                 "autodetect": "True",
                 "sourceFormat": "PARQUET",
-                "sourceUris": [f"gs://{BUCKET}/raw/police_data__2003-2017.parquet"],
+                "sourceUris": [
+                    f"gs://{BUCKET}/{OUTPUT_PATH}{HISTORICAL_FILENAME_PARQUET}"
+                ],
                 "ignoreUnknownValues": "True",
             },
         },
     )
 
     # TO-DO: add sensors to check for files existence (for ex. GCSObjectExistenceSensor)
+
     (
         download_dataset
-        >> transform_to_parquet
+        >> transform_2_parquet
         >> local_to_gcs
-        >> bigquery_external_table_task
+        >> bigquery_external_table
     )
