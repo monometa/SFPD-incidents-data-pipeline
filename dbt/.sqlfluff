@@ -2,8 +2,10 @@
 templater = dbt
 dialect = bigquery
 [sqlfluff:rules]
-comma_style = leading
+comma_style = trailing
 [sqlfluff:rules:L010]
 capitalisation_policy = lower
+[sqlfluff:rules:L014]
+extended_capitalisation_policy = upper
 [sqlfluff:rules:L030]
 capitalisation_policy = lower
