@@ -9,7 +9,7 @@ select
     LONGITUDE,
     DATETIME(INCIDENT_DATETIME) as INCIDENT_DATETIME
 
-from {{ source('police_staging', 'sfpd_data_2018_to_present_external_table') }}
+from {{ source('police_staging', 'raw_modern_police_reports') }}
 
 where POLICE_DISTRICT != 'Out of SF'
     and INCIDENT_CATEGORY = 'Larceny Theft' or

@@ -1,44 +1,44 @@
 
-{{ config(materialized='table')}}
+{{ config(materialized='table') }}
 
 with
-historical as (select * from {{ ref('int_historical_dset') }}
+HISTORICAL as (select * from {{ ref('int_historical') }}
 ),
 
-modern as (select * from {{ ref('stg_modern_dset') }}
+MODERN as (select * from {{ ref('int_modern') }}
 ),
 
-overall as (
+UNIONED as (
     select
         *,
-        ROW_NUMBER() over(order by incident_datetime) as id
+        ROW_NUMBER() over(order by INCIDENT_DATETIME) as ID
     from(
         select
-            incident_datetime,
-            incident_number,
-            incident_category,
-            incident_description,
-            police_district,
-            resolution,
-            latitude,
-            longitude
+            INCIDENT_DATETIME,
+            INCIDENT_NUMBER,
+            INCIDENT_CATEGORY,
+            INCIDENT_DESCRIPTION,
+            POLICE_DISTRICT,
+            RESOLUTION,
+            LATITUDE,
+            LONGITUDE
         from
-            historical
+            HISTORICAL
 
         union all
 
         select
-            incident_datetime,
-            incident_number,
-            incident_category,
-            incident_description,
-            police_district,
-            resolution,
-            latitude,
-            longitude
+            INCIDENT_DATETIME,
+            INCIDENT_NUMBER,
+            INCIDENT_CATEGORY,
+            INCIDENT_DESCRIPTION,
+            POLICE_DISTRICT,
+            RESOLUTION,
+            LATITUDE,
+            LONGITUDE
         from
-            modern
-    ) as temp_t
+            MODERN
+    ) as TEMP_T
 )
 
-select * from overall
+select * from UNIONED

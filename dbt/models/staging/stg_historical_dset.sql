@@ -1,22 +1,22 @@
 select
-    PdId as ID,
-    IncidntNum as Incident_Number,
-    Descript as Incident_Description,
-    Resolution,
-    Y as Latitude,
-    X as Longitude,
+    PDID as ID,
+    INCIDNTNUM as INCIDENT_NUMBER,
+    DESCRIPT as INCIDENT_DESCRIPTION,
+    RESOLUTION,
+    Y as LATITUDE,
+    X as LONGITUDE,
     DATETIME(
-        PARSE_DATE('%m/%d/%Y', Date), PARSE_TIME('%H:%M', Time)
-    ) as Incident_Datetime,
-    INITCAP(Category) as Incident_Category,
-    INITCAP(PdDistrict) as Police_District
+        PARSE_DATE('%m/%d/%Y', DATE), PARSE_TIME('%H:%M', TIME)
+    ) as INCIDENT_DATETIME,
+    INITCAP(CATEGORY) as INCIDENT_CATEGORY,
+    INITCAP(PDDISTRICT) as POLICE_DISTRICT
 
-from {{ source('police_staging', 'sfpd_data_2003_to_2017_external_table') }}
+from {{ source('police_staging', 'raw_historical_police_reports') }}
 
-where INITCAP(PdDistrict) != 'Na'
-    and INITCAP(Category) = 'Larceny/Theft' or
-    INITCAP(Category) = 'Assault' or
-    INITCAP(Category) = 'Vehicle Theft' or
-    INITCAP(Category) = 'Drug/Narcotic' or
-    INITCAP(Category) = 'Burglary' or
-    INITCAP(Category) = 'Robbery'
+where INITCAP(PDDISTRICT) != 'Na'
+    and INITCAP(CATEGORY) = 'Larceny/Theft' or
+    INITCAP(CATEGORY) = 'Assault' or
+    INITCAP(CATEGORY) = 'Vehicle Theft' or
+    INITCAP(CATEGORY) = 'Drug/Narcotic' or
+    INITCAP(CATEGORY) = 'Burglary' or
+    INITCAP(CATEGORY) = 'Robbery'
