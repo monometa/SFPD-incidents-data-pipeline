@@ -7,7 +7,6 @@
 * [Project Overview](#project-overview)
 * [Dataset](#dataset)
 * [Technologies](#technologies)
-* [Files and What They Do](#files-and-what-they-do)
 * [Improvements to do](#improvements-to-do)
 
 ## Project Overview
