@@ -163,3 +163,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 airflow/logs/scheduler/latest
+airflow/logs/dag_processor_manager/dag_processor_manager.log.1
