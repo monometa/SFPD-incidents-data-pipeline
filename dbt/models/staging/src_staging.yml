@@ -7,8 +7,9 @@ sources:
       database: gold-totem-359211
       schema: police_staging 
       tables:
-        - name: sfpd_data_2018-to-present_external_table  
-        - name: sfpd_data_2003-to-2017_external_table 
+        - name: raw_modern_police_reports
+        - name: raw_historical_police_reports
+        - name: raw_police_reports_CY
 
 
 models:
@@ -22,7 +23,7 @@ models:
         tests:
           - not_null
 
-  - name: int_historical_dset
+  - name: int_historical
     columns:
       - name: ID
         tests:
