@@ -14,9 +14,7 @@
 
 ![Project Overview](https://user-images.githubusercontent.com/107945681/192289946-803d3787-5a84-45d9-8288-bd7e4b479e84.png)
 
-GOAL / MISSION
-
-In this project, we first extract * (csv / API). We then consume and put them into a data lake (Google Cloud Storage). After that we schedule a data pipeline (Airflow) to run daily to load the data to a data warehouse (Google BigQuery). Later on, we transform the data in the warehouse using dbt. Finally, once the data is cleaned and transformed, we can monitor and analyze the data on a dashboard (Tableau).
+In this project, we first extract by downloading CSVs using SODA API. We then consume and put them into a data lake (Google Cloud Storage). After that we schedule a data pipeline (Airflow) to run montly to load to a data warehouse (Google BigQuery). Later on, we transform the data in the warehouse using dbt. Finally, once the data is cleaned and transformed, we can monitor and analyze the data on a dashboard (Tableau).
 
 ## Dataset
 
