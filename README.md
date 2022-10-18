@@ -39,16 +39,10 @@ Follow below steps to set up the project. I've tried to explain steps where I ca
 
 As Google offers a free trial for 3 months, this shouldn't cost you anything with proper settings (which will be mentioned later). However, please check [Google Free Trial and Free Tier](https://cloud.google.com/free) limits, as this may change.
 
-First clone the repository into your home directory and follow the steps.
-
-  ```bash
-  git clone https://github.com/monometa/SFPD-de-capstone-project.git
-  cd SFPD-de-capstone-project
-  ```
-  
 1. [Prerequisites](instructions/prerequisites.md)
-1. [Infrastructure with Terraform](instructions/infrastructure.md)
-1. [Docker & Airflow](instructions/docker_airflow.md) 
-1. [dbt](instructions/dbt.md)
-1. [Dashboard](instructions/visualisation.md)
-1. [Improvements](instructions/improvements.md)
+2. [Google Cloud setup](google-cloud.md)
+3. [Infrastructure & Terraform](instructions/infrastructure.md)
+4. [Airflow](instructions/airflow.md) 
+5. [dbt](instructions/dbt.md)
+6. [Dashboard](instructions/visualisation.md)
+7. [Improvements](instructions/improvements.md)
