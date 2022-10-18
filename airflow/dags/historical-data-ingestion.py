@@ -26,7 +26,7 @@ from google.cloud import storage
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME")
-BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", "police_staging")
+BIGQUERY_DATASET = "police_staging"
 
 DATASET = "historical_police_reports"
 OUTPUT_PATH = "raw/"
