@@ -92,7 +92,7 @@ Make sure that the credentials are updated and the environment variable is set u
     
 ---
 
-[Previous Step](google-cloud.md) | [Next Step](docker_airflow.md)
+[Previous Step](google-cloud.md) | [Next Step](airflow.md)
 
 or
 
