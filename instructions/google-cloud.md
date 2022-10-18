@@ -64,7 +64,7 @@ Host <your-hostname>
 
 ---
 
-[Previous Step](prerequisites.md.md) | [Next Step](infrastructure.md.md)
+[Previous Step](prerequisites.md) | [Next Step](infrastructure.md)
 
 or
 
