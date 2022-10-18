@@ -40,7 +40,7 @@ Follow below steps to set up the project. I've tried to explain steps where I ca
 As Google offers a free trial for 3 months, this shouldn't cost you anything with proper settings (which will be mentioned later). However, please check [Google Free Trial and Free Tier](https://cloud.google.com/free) limits, as this may change.
 
 1. [Prerequisites](instructions/prerequisites.md)
-2. [Google Cloud setup](google-cloud.md)
+2. [Google Cloud setup](instructions/google-cloud.md)
 3. [Infrastructure & Terraform](instructions/infrastructure.md)
 4. [Airflow](instructions/airflow.md) 
 5. [dbt](instructions/dbt.md)
