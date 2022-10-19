@@ -93,7 +93,7 @@ with DAG(
         task_id="generate_url_task",
         python_callable=generate_url,
         op_kwargs={
-            "limit": 100,
+            "limit": 10000000,
             "start_year": "2018",
             "end_year": "2021",
         },
@@ -101,7 +101,7 @@ with DAG(
 
     download_dataset = BashOperator(
         task_id="download_dataset_task",
-        bash_command=rf"curl -sSL '{{{{ti.xcom_pull(key='url_dset', task_ids='generate_url_task')}}}}' > $AIRFLOW_HOME/{MODERN_FILENAME_CSV}",
+        bash_command=rf"curl -sSLf '{{{{ ti.xcom_pull(key='url_dset', task_ids='generate_url_task') }}}}' > $AIRFLOW_HOME/{MODERN_FILENAME_CSV}",
     )
 
     transform_2_parquet = PythonOperator(
