@@ -62,10 +62,7 @@ with DAG(
 
     download_dataset = BashOperator(
         task_id="download_dataset_task",
-
-        # TO-DO: for curl set absolute path to https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-Historical-2003/tmnf-yvry
-
-        bash_command=f"curl -sSL 172.17.0.1:8000/police_data__2003-2017.csv > $AIRFLOW_HOME/{HISTORICAL_FILENAME_CSV}",
+        bash_command=f"curl -sSL https://data.sfgov.org/api/views/tmnf-yvry/rows.csv > $AIRFLOW_HOME/{HISTORICAL_FILENAME_CSV}",
     )
 
     transform_2_parquet = PythonOperator(
