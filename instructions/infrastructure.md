@@ -5,7 +5,7 @@ Run this first in your SSH session: `sudo apt update && sudo apt -y upgrade`
 1. Change your settings so that you can run Docker without `sudo`:
     1. Run `sudo groupadd docker`
     1. Run `sudo gpasswd -a $USER docker`
-    1. Log out of your SSH session and log back in.
+    1. Log out of your SSH session and log back in (you should also restart your VM instance) .
     1. Run `sudo service docker restart`
     1. Test that Docker can run successfully with `docker run hello-world`
     2. If you want to test something more useful please try `docker run -it ubuntu bash`
