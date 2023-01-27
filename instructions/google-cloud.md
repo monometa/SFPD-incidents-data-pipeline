@@ -43,7 +43,7 @@ You will also need to activate the following APIs:
 
 1. Start your instance from the _VM instances_ dashboard in Google Cloud.
 1. Copy the external IP address from the _VM instances_ dashboard.
-2. Go to the terminal and type ```ssh -i ~/.ssh/gcp username@external_ip``` where gcp corresponds to the _key_filename_.
+2. Go to the terminal and type ```ssh -i ~/.ssh/KEY_FILENAME USER@external_ip```
 
 ### Creating SSH config file
 
